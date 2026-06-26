@@ -64,12 +64,12 @@
             document.getElementById("uid-display").style.display = "none";
             document.getElementById("auth-content").innerHTML = `
                 <div id="email-list" style="margin-bottom: 20px; text-align: left; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-                    <div class="em-item" data-val="talha@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha.png</div>
-                    <div class="em-item" data-val="talha1@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">icon.png</div>
-                    <div class="em-item" data-val="talha2@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">logo.png</div>
-                    <div class="em-item" data-val="talha3@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">tahir.png</div>
-                    <div class="em-item" data-val="talha4@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">jafar.png</div>
-                    <div class="em-item" data-val="talha5@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">hamza.png</div>
+                    <div class="em-item" data-val="talha.png" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha@gmail.com</div>
+                    <div class="em-item" data-val="icon.png" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha1@gmail.com</div>
+                    <div class="em-item" data-val="logo.png" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha2@gmail.com</div>
+                    <div class="em-item" data-val="tahir.png" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha3@gmail.com</div>
+                    <div class="em-item" data-val="jafar.png" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha4@gmail.com</div>
+                    <div class="em-item" data-val="hamza.png" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha5@gmail.com</div>
 
                 </div>
                 <button id="activate-btn" disabled style="width: 100%; background: #ccc; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer;">ACTIVATE</button>
