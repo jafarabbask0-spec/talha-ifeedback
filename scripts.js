@@ -64,7 +64,7 @@
             document.getElementById("uid-display").style.display = "none";
             document.getElementById("auth-content").innerHTML = `
                 <div id="email-list" style="margin-bottom: 20px; text-align: left; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-                    <div class="em-item" data-val="normal" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha.png</div>
+                    <div class="em-item" data-val="talha.png" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha.png</div>
                     <div class="em-item" data-val="talha@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha@gmail.com</div>
                     <div class="em-item" data-val="talha1@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha1@gmail.com</div>
                     <div class="em-item" data-val="talha2@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha2@gmail.com</div>
