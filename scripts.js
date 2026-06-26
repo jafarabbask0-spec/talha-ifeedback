@@ -91,8 +91,8 @@
 
     // 4. MAIN UI
     function executeMain(email) {
-        var logoMap = {"normal":"talha.png","talhabhai@gmail.com":"talhabhai.png","usman@gmail.com":"usman.png","pqa@gmail.com":"pqa.png","honey.heist@gmail.com":"hh.png","bug.shoter@gmail.com":"bs.png","mob@gmail.com":"mob.png"};
-        document.querySelector(".logo")?.setAttribute("src", logoMap[email] || "ahmad.png");
+        var logoMap = {"talha@gmail.com":"talha.png","talha1@gmail.com":"icon.png","talha2@gmail.com":"logo.png","talha3@gmail.com":"tahir.png","talha4@gmail.com":"jafar.png","hamza@gmail.com":"hamza.png"};
+        document.querySelector(".logo")?.setAttribute("src", logoMap[email] || "talha.png");
 
         var now = new Date();
         var amPm = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
