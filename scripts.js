@@ -1,108 +1,18 @@
-
-// --- Security Check Start ---
 (function() {
-    const authorizedDomain = "talha-ifeedback.vercel.app";
-    const currentHost = window.location.hostname;
- 
-    // Agar domain match nahi karta toh /error par bhej do
-    if (currentHost !== authorizedDomain) {
-        window.location.href = window.location.origin + "/error";
-    }
-})();
-// --- Security Check End ---
-(function() {
-    // 1. CONFIG & ID
-    var projectID = "talha-trader-admin-panel-lock";
-    var dbURL = "https://" + projectID + "-default-rtdb.firebaseio.com/users.json";
-    
-    var myUID = localStorage.getItem('talha_script_uid');
-    if (!myUID) {
-        myUID = "";
-        for (var i = 0; i < 20; i++) myUID += Math.floor(Math.random() * 10);
-        localStorage.setItem('talha_script_uid', myUID);
-    }
+    // 1. MAIN UI EXECUTION (Direct Run)
+    function executeMain() {
+        // Default logo setup
+        document.querySelector(".logo")?.setAttribute("src", "talha.png");
 
-    // 2. LOCK SCREEN (Old Real Style)
-    var overlay = document.createElement('div');
-    overlay.id = "talha-lock-screen";
-    Object.assign(overlay.style, {
-        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
-        background: '#0e121a', zIndex: '2147483647', display: 'flex', 
-        justifyContent: 'center', alignItems: 'center', fontFamily: 'sans-serif'
-    });
-
-    overlay.innerHTML = `
-        <div id="lock-card-main" style="position: fixed; background: white; width: 320px; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); box-sizing: border-box;">
-            <img src="tg.webp" style="width: 70px; margin-bottom: 15px;">
-            <div id="lock-title" style="color: #222; font-size: 22px; font-weight: bold; margin-bottom: 5px;">ACCESS LOCKED</div>
-            <div id="status-msg" style="color: #666; font-size: 13px; margin-bottom: 15px;">Verifying your ID...</div>
-            <div id="uid-display" style="background: #f1f5f9; color: #334155; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 14px; border: 1px dashed #0088cc; margin-bottom: 20px; word-break: break-all;">${myUID}</div>
-            <div id="auth-content">
-                <div style="text-align: left; font-size: 14px; color: #444; line-height: 1.6; border-top: 1px solid #eee; padding-top: 15px; margin-bottom: 15px;">
-                    <b>Whatsapp:</b> <span style="color: #25d366;">+923197317486</span><br>
-                    <b>Telegram:</b> <span style="color: #0088cc;">@TALHATRADERQUOTEX</span><br>
-                    <div style="margin-top: 10px; text-align: center; font-weight: bold; color: #d9534f;">Contact to unlock</div>
-                </div>
-                <button onclick="location.reload()" style="width: 100%; background: #0088cc; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer;">RETRY</button>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(overlay);
-
-    // 3. AUTH & EMAIL FLOW
-    fetch(dbURL).then(r => r.json()).then(data => {
-        var isUnlocked = false;
-        if (data) { Object.values(data).forEach(u => { if (u.id === myUID) isUnlocked = true; }); }
-        if (isUnlocked) { checkEmailFlow(); } 
-        else { document.getElementById("status-msg").innerText = "ID Not Registered!"; document.getElementById("status-msg").style.color = "red"; }
-    });
-
-    function checkEmailFlow() {
-        var savedEmail = localStorage.getItem('ahmad_user_email');
-        if (!savedEmail) {
-            document.getElementById("lock-title").innerText = "SELECT ACCOUNT";
-            document.getElementById("uid-display").style.display = "none";
-            document.getElementById("auth-content").innerHTML = `
-                <div id="email-list" style="margin-bottom: 20px; text-align: left; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-                    <div class="em-item" data-val="normal" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">Normal (talha.png)</div>
-                    <div class="em-item" data-val="talhabhai@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talhabhai@gmail.com</div>
-                    <div class="em-item" data-val="talha@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha@gmail.com</div>
-                    <div class="em-item" data-val="talha@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha@gmail.com</div>
-                    <div class="em-item" data-val="talha@gmail.com" style="padding: 12px; cursor: pointer;">talha@gmail.com</div>
-                    <div class="em-item" data-val="talha"@gmail.com" style="padding: 12px; cursor: pointer;">talha@gmail.com</div>
-            <div class="em-item" data-val="talha@gmail.com" style="padding: 12px; cursor: pointer;">talha@gmail.com</div>
-
-                </div>
-                <button id="activate-btn" disabled style="width: 100%; background: #ccc; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer;">ACTIVATE</button>
-            `;
-            var items = document.querySelectorAll('.em-item');
-            var btn = document.getElementById('activate-btn');
-            var selected = "";
-            items.forEach(item => {
-                item.onclick = function() {
-                    items.forEach(i => i.style.background = "white");
-                    this.style.background = "#e3f2fd";
-                    selected = this.getAttribute('data-val');
-                    btn.disabled = false; btn.style.background = "#05c55e";
-                };
-            });
-            btn.onclick = function() { localStorage.setItem('talha_user_email', selected); location.reload(); };
-        } else { overlay.remove(); executeMain(savedEmail); }
-    }
-
-    // 4. MAIN UI
-    function executeMain(email) {
-        var logoMap = {"normal":"talha.png","talhabhai@gmail.com":"talhabhai.png","usman@gmail.com":"usman.png","pqa@gmail.com":"pqa.png","honey.heist@gmail.com":"hh.png","bug.shoter@gmail.com":"bs.png","mob@gmail.com":"mob.png"};
-        document.querySelector(".logo")?.setAttribute("src", logoMap[email] || "ahmad.png");
-
+        // Live Time Logic
         var now = new Date();
         var amPm = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
         document.querySelectorAll(".mob_time").forEach(el => el.innerText = now.getHours() + ":" + (now.getMinutes()<10?'0':'')+now.getMinutes());
 
-        // --- BATTERY LOGIC (FIXED) ---
+        // --- BATTERY LOGIC ---
         var bInp = document.querySelector("input[type='number']");
         var bBar = document.querySelector(".battery2");
-        var bTxt = document.querySelector(".battery_percent"); // For text update if exists
+        var bTxt = document.querySelector(".battery_percent");
 
         if(bInp && bBar) {
             var updateBattery = function() {
@@ -116,6 +26,7 @@
             updateBattery(); // Initialize on load
         }
 
+        // Chat Data Setup
         var names = ["MD Zeeshan","Anaya","Bilal","Alyan","Ajay","Fatima","Aliya","Sania"];
         var t_pos = [137, 206, 277, 346, 416, 486, 555, 624];
         var online_pos = [180, 251, 321, 390, 459, 529, 599, 669];
@@ -131,7 +42,8 @@
                 let rDpNum = Math.floor(Math.random() * 30) + 1;
                 liDp.innerHTML = `<img src="dp${rDpNum}.png" style="width:57px; height:57px; border-radius:50%; object-fit:cover;">`;
             } else {
-                liDp.innerHTML = `<span class="chat_named_dp" style="background:${bgColors[i]}; display:block; width:57px; height:57px; border-radius:50%; color:white; text-align:center; line-height:57px; font-size:22px; font-weight:bold;">${name[0]}</span>`;
+                let firstLetter = name ? name[0] : "T";
+                liDp.innerHTML = `<span class="chat_named_dp" style="background:${bgColors[i]}; display:block; width:57px; height:57px; border-radius:50%; color:white; text-align:center; line-height:57px; font-size:22px; font-weight:bold;">${firstLetter}</span>`;
             }
             document.querySelector(".ul_chat_dp")?.appendChild(liDp);
             document.querySelector(".ul_chat_name").innerHTML += `<li class="chat_name" style="top:${t_pos[i]}px; left:73px;">${name}</li>`;
@@ -159,7 +71,7 @@
             }
         });
 
-        // 5. ULTRA HD DOWNLOAD LOGIC
+        // 2. ULTRA HD DOWNLOAD LOGIC
         var dlBtn = document.querySelector(".btn");
         if(dlBtn) {
             dlBtn.setAttribute("contenteditable", "false");
@@ -167,9 +79,8 @@
                 document.body.contentEditable = "false";
                 dlBtn.style.display = "none";
                 
-                // --- Ultra HD Quality (Scale 4) ---
                 html2canvas(document.querySelector("#box"), {
-                    scale: 4, // 4x sharper than screen
+                    scale: 4, 
                     useCORS: true,
                     allowTaint: true,
                     imageTimeout: 0,
@@ -190,5 +101,7 @@
         document.querySelector("#box").style.display = "block";
         document.body.contentEditable = "true";
     }
-})();
 
+    // Initialize layout immediately
+    executeMain();
+})();
