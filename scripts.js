@@ -66,11 +66,11 @@
                 <div id="email-list" style="margin-bottom: 20px; text-align: left; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
                     <div class="em-item" data-val="normal" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">Normal (talha.png)</div>
                     <div class="em-item" data-val="talhabhai@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talhabhai@gmail.com</div>
-                    <div class="em-item" data-val="user4@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">user4@gmail.com</div>
-                    <div class="em-item" data-val="user3@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">user3@gmail.com</div>
-                    <div class="em-item" data-val="user2@gmail.com" style="padding: 12px; cursor: pointer;">user2@gmail.com</div>
-                    <div class="em-item" data-val="user1"@gmail.com" style="padding: 12px; cursor: pointer;">user1@gmail.com</div>
-            <div class="em-item" data-val="user@gmail.com" style="padding: 12px; cursor: pointer;">user@gmail.com</div>
+                    <div class="em-item" data-val="talha@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha@gmail.com</div>
+                    <div class="em-item" data-val="talha@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha@gmail.com</div>
+                    <div class="em-item" data-val="talha@gmail.com" style="padding: 12px; cursor: pointer;">talha@gmail.com</div>
+                    <div class="em-item" data-val="talha"@gmail.com" style="padding: 12px; cursor: pointer;">talha@gmail.com</div>
+            <div class="em-item" data-val="talha@gmail.com" style="padding: 12px; cursor: pointer;">talha@gmail.com</div>
 
                 </div>
                 <button id="activate-btn" disabled style="width: 100%; background: #ccc; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer;">ACTIVATE</button>
