@@ -58,18 +58,19 @@
     });
 
     function checkEmailFlow() {
-        var savedEmail = localStorage.getItem('ahmad_user_email');
+        var savedEmail = localStorage.getItem('talha_user_email');
         if (!savedEmail) {
             document.getElementById("lock-title").innerText = "SELECT ACCOUNT";
             document.getElementById("uid-display").style.display = "none";
             document.getElementById("auth-content").innerHTML = `
                 <div id="email-list" style="margin-bottom: 20px; text-align: left; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-                    <div class="em-item" data-val="talha.png" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha@gmail.com</div>
-                    <div class="em-item" data-val="icon.png" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha1@gmail.com</div>
-                    <div class="em-item" data-val="logo.png" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha2@gmail.com</div>
-                    <div class="em-item" data-val="tahir.png" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha3@gmail.com</div>
-                    <div class="em-item" data-val="jafar.png" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha4@gmail.com</div>
-                    <div class="em-item" data-val="hamza.png" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talha5@gmail.com</div>
+                    <div class="em-item" data-val="normal" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">Normal (talha.png)</div>
+                    <div class="em-item" data-val="talhabhai@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talhabhai@gmail.com</div>
+                    <div class="em-item" data-val="usman@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">usman@gmail.com</div>
+                    <div class="em-item" data-val="pqa@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">pqa@gmail.com</div>
+                    <div class="em-item" data-val="honey.heist@gmail.com" style="padding: 12px; cursor: pointer;">honey.heist@gmail.com</div>
+                    <div class="em-item" data-val="mob@gmail.com" style="padding: 12px; cursor: pointer;">mob@gmail.com</div>
+            <div class="em-item" data-val="bug.shoter@gmail.com" style="padding: 12px; cursor: pointer;">bug.shoter@gmail.com</div>
 
                 </div>
                 <button id="activate-btn" disabled style="width: 100%; background: #ccc; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer;">ACTIVATE</button>
@@ -91,7 +92,7 @@
 
     // 4. MAIN UI
     function executeMain(email) {
-        var logoMap = {"talha@gmail.com":"talha.png","talha1@gmail.com":"icon.png","talha2@gmail.com":"logo.png","talha3@gmail.com":"tahir.png","talha4@gmail.com":"jafar.png","hamza@gmail.com":"hamza.png"};
+        var logoMap = {"normal":"talha.png","talhabhai@gmail.com":"talhabhai.png","usman@gmail.com":"usman.png","pqa@gmail.com":"pqa.png","honey.heist@gmail.com":"hh.png","bug.shoter@gmail.com":"bs.png","mob@gmail.com":"mob.png"};
         document.querySelector(".logo")?.setAttribute("src", logoMap[email] || "talha.png");
 
         var now = new Date();
@@ -190,3 +191,4 @@
         document.body.contentEditable = "true";
     }
 })();
+
