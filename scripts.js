@@ -12,7 +12,7 @@
 // --- Security Check End ---
 (function() {
     // 1. CONFIG & ID
-    var projectID = "talha-trader-admin-panel-lock";
+    var projectID = "reactions-maker-site";
     var dbURL = "https://" + projectID + "-default-rtdb.firebaseio.com/users.json";
     
     var myUID = localStorage.getItem('talha_script_uid');
