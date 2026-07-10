@@ -12,35 +12,72 @@
 
 <body>
     <div id="box">
-        <div class="battery1"></div>
-        <div class="battery2"></div>
-        <div class="mob_time">4:25</div>
-        
-        <div class="hide1"></div>
-        <div class="hide2"></div>
-        
-        <div class="Personal">600</div>
-        <div class="Channels">17</div>
-        <div class="Unread">620</div>
-        
-        <ul class="ul_chat_name"></ul>
-        <ul class="ul_chat_time"></ul>
-        <ul class="ul_chat_dp"></ul>
-        <ul class="ul_online_bullet"></ul>
-        <ul class="ul_msg_img"></ul>
-        <ul class="ul_count_bullet"></ul>
-        
-        <div class="hide3"></div>
-        <div class="chats_counts">2.6K</div>
-        <div class="settings_count">7</div>
+        <div class="status-bar">
+            <div class="mob_time">4:25</div>
+            <div class="status-icons">
+                <span class="lte-text">LTE</span>
+                <div class="battery-container">
+                    <div class="battery-level" style="width: 13%;"></div>
+                </div>
+                <span class="battery-percentage">13</span>
+            </div>
+        </div>
 
-        <img src="ifeed-thumb.jpeg" class="logo" alt="Logo">
-        <img src="ifeed-thumb.jpeg" alt="Telegram Feed" class="bg_img">
+        <div class="header-actions">
+            <span class="btn-edit">Edit</span>
+            <div class="chat-title-area">
+                <span class="chat-title">Chats</span>
+                <span class="crown-icon">👑</span>
+            </div>
+            <div class="header-icons">
+                <span class="icon-verify">✓</span>
+                <span class="icon-add">+</span>
+                <span class="icon-compose">📝</span>
+            </div>
+        </div>
+
+        <div class="tabs-container">
+            <div class="tab active">All</div>
+            <div class="tab">Personal <span class="badge blue-badge">600</span></div>
+            <div class="tab">Channels <span class="badge blue-badge">17</span></div>
+            <div class="tab">Unread <span class="badge blue-badge">620</span></div>
+        </div>
+
+        <div class="chat-list-container">
+            <ul class="ul_chat_list">
+                </ul>
+        </div>
+
+        <ul class="ul_chat_name" style="display:none;"></ul>
+        <ul class="ul_chat_time" style="display:none;"></ul>
+        <ul class="ul_chat_dp" style="display:none;"></ul>
+        <ul class="ul_online_bullet" style="display:none;"></ul>
+        <ul class="ul_msg_img" style="display:none;"></ul>
+        <ul class="ul_count_bullet" style="display:none;"></ul>
+
+        <div class="bottom-nav">
+            <div class="nav-item">
+                <div class="nav-icon contacts-icon"></div>
+                <span>Contacts</span>
+            </div>
+            <div class="nav-item active">
+                <div class="chats_counts">2.6K</div>
+                <div class="nav-icon chats-icon"></div>
+                <span>Chats</span>
+            </div>
+            <div class="nav-item">
+                <div class="settings_count">7</div>
+                <img id="dynamic-logo" src="ifeed-thumb.jpeg" class="logo" alt="User Profile/Logo">
+                <span>Settings</span>
+            </div>
+        </div>
+
+        <img src="ifeed-thumb.jpeg" alt="Background UI" class="bg_img">
     </div>
 
-    <div class="controls-wrapper">
+    <div class="controls-panel">
         <label for="battery-input">Battery (%):</label>
-        <input type="number" id="battery-input" value="13" max="100">
+        <input type="number" id="battery-input" value="13" max="100" min="1">
         <button class="btn" title="Download">
             <img src="https://raw.githubusercontent.com/ahmad-bhai/zeetex-currency-rate/0f914c89358480c47e3fdbb8a74f7020d938cf36/download.svg" alt="Download">
         </button>
@@ -49,6 +86,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
         integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const logoImg = document.getElementById('dynamic-logo');
+            
+            // Auto-refresh state control ya specific image assign karne ke liye
+            if (logoImg) {
+                // Refresh hone par seedha default target layout 'ifeed-thumb.jpeg' confirm karta hai
+                logoImg.src = "ifeed-thumb.jpeg?t=" + new Date().getTime(); 
+            }
+        });
+    </script>
     <script src="scripts.js"></script>
 </body>
 
