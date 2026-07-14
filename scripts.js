@@ -1,4 +1,3 @@
-
 // --- Security Check Start ---
 (function() {
     const authorizedDomain = "talha-ifeedback.vercel.app";
@@ -10,10 +9,11 @@
     }
 })();
 // --- Security Check End ---
+
 (function() {
-    // 1. CONFIG & ID
-    var projectID = "talha-trader-admin-panel-lock";
-    var dbURL = "https://" + projectID + "-default-rtdb.firebaseio.com/users.json";
+    // 1. CONFIG & NEW VERCEL AUTH API
+    // Talha Bhai, ab humne direct Firebase link hatakar aapka fast Vercel URL laga diya hai
+    var authAPI = "https://talha-ifeedback.vercel.app/f?id=";
     
     var myUID = localStorage.getItem('talha_script_uid');
     if (!myUID) {
@@ -39,7 +39,7 @@
             <div id="uid-display" style="background: #f1f5f9; color: #334155; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 14px; border: 1px dashed #0088cc; margin-bottom: 20px; word-break: break-all;">${myUID}</div>
             <div id="auth-content">
                 <div style="text-align: left; font-size: 14px; color: #444; line-height: 1.6; border-top: 1px solid #eee; padding-top: 15px; margin-bottom: 15px;">
-                    <b>Telegram:</b> <span style="color: #0088cc;">@TALHA_SCRIPTS</span><br>
+                    <b>Telegram:</b> <span style="color: #0088cc;">@Talha_Scripts</span><br>
                     <div style="margin-top: 10px; text-align: center; font-weight: bold; color: #d9534f;">Contact to unlock</div>
                 </div>
                 <button onclick="location.reload()" style="width: 100%; background: #0088cc; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer;">RETRY</button>
@@ -48,13 +48,22 @@
     `;
     document.body.appendChild(overlay);
 
-    // 3. AUTH & EMAIL FLOW
-    fetch(dbURL).then(r => r.json()).then(data => {
-        var isUnlocked = false;
-        if (data) { Object.values(data).forEach(u => { if (u.id === myUID) isUnlocked = true; }); }
-        if (isUnlocked) { checkEmailFlow(); } 
-        else { document.getElementById("status-msg").innerText = "ID Not Registered!"; document.getElementById("status-msg").style.color = "red"; }
-    });
+    // 3. SECURE AUTHENTICATION FLOW
+    // Ab yeh pure data fetch nahi karega, balki seedha true/false check karega aapki API se
+    fetch(authAPI + myUID)
+        .then(r => r.json())
+        .then(res => {
+            if (res && res.authorized === true) { 
+                checkEmailFlow(); 
+            } else { 
+                document.getElementById("status-msg").innerText = "ID Not Registered!"; 
+                document.getElementById("status-msg").style.color = "red"; 
+            }
+        })
+        .catch(err => {
+            document.getElementById("status-msg").innerText = "Server Error! Retry Again.";
+            document.getElementById("status-msg").style.color = "orange";
+        });
 
     function checkEmailFlow() {
         var savedEmail = localStorage.getItem('talha_user_email');
@@ -63,14 +72,13 @@
             document.getElementById("uid-display").style.display = "none";
             document.getElementById("auth-content").innerHTML = `
                 <div id="email-list" style="margin-bottom: 20px; text-align: left; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-                    <div class="em-item" data-val="normal" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">Normal (talha.png)</div>
+                    <div class="em-item" data-val="normal" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">Default</div>
                     <div class="em-item" data-val="talhabhai@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talhabhai@gmail.com</div>
                     <div class="em-item" data-val="usman@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">usman@gmail.com</div>
                     <div class="em-item" data-val="pqa@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">pqa@gmail.com</div>
                     <div class="em-item" data-val="honey.heist@gmail.com" style="padding: 12px; cursor: pointer;">honey.heist@gmail.com</div>
                     <div class="em-item" data-val="mob@gmail.com" style="padding: 12px; cursor: pointer;">mob@gmail.com</div>
-            <div class="em-item" data-val="bug.shoter@gmail.com" style="padding: 12px; cursor: pointer;">bug.shoter@gmail.com</div>
-
+                    <div class="em-item" data-val="bug.shoter@gmail.com" style="padding: 12px; cursor: pointer;">bug.shoter@gmail.com</div>
                 </div>
                 <button id="activate-btn" disabled style="width: 100%; background: #ccc; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer;">ACTIVATE</button>
             `;
@@ -91,7 +99,7 @@
 
     // 4. MAIN UI
     function executeMain(email) {
-        var logoMap = {"normal":"talha.png","talhabhai@gmail.com":"talhabhai.png","usman@gmail.com":"usman.png","pqa@gmail.com":"pqa.png","honey.heist@gmail.com":"hh.png","bug.shoter@gmail.com":"bs.png","mob@gmail.com":"mob.png"};
+        var logoMap = {"normal":"https://talha-scripts-official.vercel.app/TS.png","talhabhai@gmail.com":"talhabhai.png","usman@gmail.com":"usman.png","pqa@gmail.com":"pqa.png","honey.heist@gmail.com":"hh.png","bug.shoter@gmail.com":"bs.png","mob@gmail.com":"mob.png"};
         document.querySelector(".logo")?.setAttribute("src", logoMap[email] || "talha.png");
 
         var now = new Date();
@@ -101,7 +109,7 @@
         // --- BATTERY LOGIC (FIXED) ---
         var bInp = document.querySelector("input[type='number']");
         var bBar = document.querySelector(".battery2");
-        var bTxt = document.querySelector(".battery_percent"); // For text update if exists
+        var bTxt = document.querySelector(".battery_percent");
 
         if(bInp && bBar) {
             var updateBattery = function() {
@@ -112,7 +120,7 @@
                 if(bTxt) bTxt.innerText = val + "%";
             };
             bInp.addEventListener('input', updateBattery);
-            updateBattery(); // Initialize on load
+            updateBattery();
         }
 
         var names = ["MD Zeeshan","Anaya","Bilal","Alyan","Ajay","Fatima","Aliya","Sania"];
@@ -166,9 +174,8 @@
                 document.body.contentEditable = "false";
                 dlBtn.style.display = "none";
                 
-                // --- Ultra HD Quality (Scale 4) ---
                 html2canvas(document.querySelector("#box"), {
-                    scale: 4, // 4x sharper than screen
+                    scale: 4, 
                     useCORS: true,
                     allowTaint: true,
                     imageTimeout: 0,
@@ -190,4 +197,3 @@
         document.body.contentEditable = "true";
     }
 })();
-
