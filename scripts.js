@@ -11,9 +11,11 @@
 // --- Security Check End ---
 
 (function() {
-    // 1. CONFIG & NEW VERCEL AUTH API
-    // Talha Bhai, ab humne direct Firebase link hatakar aapka fast Vercel URL laga diya hai
-    var authAPI = "https://talha-ifeedback.vercel.app/f?id=";
+    // 1. CONFIG & FIREBASE REALTIME DATABASE INTEGRATION
+    // Firebase Realtime Database configurations for: talha-trader-admin-panel-lock
+    var firebaseConfig = {
+        databaseURL: "https://talha-trader-admin-panel-lock-default-rtdb.firebaseio.com" // Aapka accurate database URL
+    };
     
     var myUID = localStorage.getItem('talha_script_uid');
     if (!myUID) {
@@ -48,22 +50,44 @@
     `;
     document.body.appendChild(overlay);
 
-    // 3. SECURE AUTHENTICATION FLOW
-    // Ab yeh pure data fetch nahi karega, balki seedha true/false check karega aapki API se
-    fetch(authAPI + myUID)
-        .then(r => r.json())
-        .then(res => {
-            if (res && res.authorized === true) { 
-                checkEmailFlow(); 
-            } else { 
-                document.getElementById("status-msg").innerText = "ID Not Registered!"; 
-                document.getElementById("status-msg").style.color = "red"; 
-            }
-        })
-        .catch(err => {
-            document.getElementById("status-msg").innerText = "Server Error! Retry Again.";
-            document.getElementById("status-msg").style.color = "orange";
-        });
+    // Dynamic Firebase SDK loader to avoid import issues
+    function loadFirebaseAndAuth() {
+        var script = document.createElement('script');
+        script.src = "https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js";
+        script.onload = function() {
+            var dbScript = document.createElement('script');
+            dbScript.src = "https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js";
+            dbScript.onload = function() {
+                // Initialize Firebase
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                var database = firebase.database();
+                
+                // Read directly from Firebase Database: users/UID/authorized
+                database.ref('users/' + myUID).once('value')
+                    .then(snapshot => {
+                        var userData = snapshot.val();
+                        if (userData && (userData.authorized === true || userData.authorized === "true")) {
+                            checkEmailFlow();
+                        } else {
+                            document.getElementById("status-msg").innerText = "ID Not Registered!"; 
+                            document.getElementById("status-msg").style.color = "red"; 
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        document.getElementById("status-msg").innerText = "Database Error! Retry.";
+                        document.getElementById("status-msg").style.color = "orange";
+                    });
+            };
+            document.head.appendChild(dbScript);
+        };
+        document.head.appendChild(script);
+    }
+
+    // Run Auth Flow
+    loadFirebaseAndAuth();
 
     function checkEmailFlow() {
         var savedEmail = localStorage.getItem('talha_user_email');
@@ -71,13 +95,13 @@
             document.getElementById("lock-title").innerText = "SELECT ACCOUNT";
             document.getElementById("uid-display").style.display = "none";
             document.getElementById("auth-content").innerHTML = `
-                <div id="email-list" style="margin-bottom: 20px; text-align: left; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
+                <div id="email-list" style="margin-bottom: 20px; text-align: left; border: 1px solid #eee; border-radius: 12px; overflow: hidden; max-height: 250px; overflow-y: auto;">
                     <div class="em-item" data-val="normal" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">Default</div>
                     <div class="em-item" data-val="talhabhai@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">talhabhai@gmail.com</div>
                     <div class="em-item" data-val="usman@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">usman@gmail.com</div>
                     <div class="em-item" data-val="pqa@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">pqa@gmail.com</div>
-                    <div class="em-item" data-val="honey.heist@gmail.com" style="padding: 12px; cursor: pointer;">honey.heist@gmail.com</div>
-                    <div class="em-item" data-val="mob@gmail.com" style="padding: 12px; cursor: pointer;">mob@gmail.com</div>
+                    <div class="em-item" data-val="honey.heist@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">honey.heist@gmail.com</div>
+                    <div class="em-item" data-val="mob@gmail.com" style="padding: 12px; border-bottom: 1px solid #eee; cursor: pointer;">mob@gmail.com</div>
                     <div class="em-item" data-val="bug.shoter@gmail.com" style="padding: 12px; cursor: pointer;">bug.shoter@gmail.com</div>
                 </div>
                 <button id="activate-btn" disabled style="width: 100%; background: #ccc; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer;">ACTIVATE</button>
@@ -106,7 +130,7 @@
         var amPm = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
         document.querySelectorAll(".mob_time").forEach(el => el.innerText = now.getHours() + ":" + (now.getMinutes()<10?'0':'')+now.getMinutes());
 
-        // --- BATTERY LOGIC (FIXED) ---
+        // --- BATTERY LOGIC ---
         var bInp = document.querySelector("input[type='number']");
         var bBar = document.querySelector(".battery2");
         var bTxt = document.querySelector(".battery_percent");
